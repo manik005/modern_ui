@@ -25,11 +25,13 @@ app_license = "mit"
 # ------------------
 
 # include js, css files in header of desk.html
-# app_include_css = "/assets/modern_ui/css/modern_ui.css"
-# app_include_js = "/assets/modern_ui/js/modern_ui.js"
+app_include_css = "/assets/modern_ui/css/modern_ui.bundle.css"
+#app_include_js = "/assets/modern_ui/js/modern_ui.js"
+#app_include_js = ["/assets/modern_ui/js/modern_ui.bundle.js"]
+app_include_js = "/assets/modern_ui/js/modern_ui.bundle.js"
 
 # include js, css files in header of web template
-# web_include_css = "/assets/modern_ui/css/modern_ui.css"
+web_include_css = "/assets/modern_ui/css/website.css"
 # web_include_js = "/assets/modern_ui/js/modern_ui.js"
 
 # include custom scss in every website theme (without file extension ".scss")
