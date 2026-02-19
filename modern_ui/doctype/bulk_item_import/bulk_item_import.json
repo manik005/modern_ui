@@ -1,0 +1,150 @@
+{
+ "actions": [],
+ "autoname": "BII-.#####",
+ "creation": "2026-02-20 09:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "file_section",
+  "csv_file",
+  "delimiter",
+  "update_existing",
+  "dry_run",
+  "defaults_section",
+  "default_company",
+  "default_warehouse",
+  "default_price_list",
+  "default_currency",
+  "options_section",
+  "skip_stock_reconciliation",
+  "skip_item_price",
+  "log_section",
+  "import_log"
+ ],
+ "fields": [
+  {
+   "fieldname": "file_section",
+   "fieldtype": "Section Break",
+   "label": "CSV File"
+  },
+  {
+   "fieldname": "csv_file",
+   "fieldtype": "Attach",
+   "label": "CSV File",
+   "options": "CSV",
+   "reqd": 1
+  },
+  {
+   "default": ",",
+   "fieldname": "delimiter",
+   "fieldtype": "Data",
+   "label": "Delimiter",
+   "description": "Default is comma (,).",
+   "in_list_view": 0
+  },
+  {
+   "fieldname": "update_existing",
+   "fieldtype": "Check",
+   "label": "Update Existing Items/Prices",
+   "default": "1"
+  },
+  {
+   "fieldname": "dry_run",
+   "fieldtype": "Check",
+   "label": "Dry Run (No Changes)",
+   "default": "0"
+  },
+  {
+   "fieldname": "defaults_section",
+   "fieldtype": "Section Break",
+   "label": "Defaults"
+  },
+  {
+   "fieldname": "default_company",
+   "fieldtype": "Link",
+   "label": "Default Company",
+   "options": "Company"
+  },
+  {
+   "fieldname": "default_warehouse",
+   "fieldtype": "Link",
+   "label": "Default Warehouse",
+   "options": "Warehouse"
+  },
+  {
+   "fieldname": "default_price_list",
+   "fieldtype": "Link",
+   "label": "Default Price List",
+   "options": "Price List"
+  },
+  {
+   "fieldname": "default_currency",
+   "fieldtype": "Link",
+   "label": "Default Currency",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "options_section",
+   "fieldtype": "Section Break",
+   "label": "Options"
+  },
+  {
+   "fieldname": "skip_stock_reconciliation",
+   "fieldtype": "Check",
+   "label": "Skip Stock Reconciliation",
+   "default": "0"
+  },
+  {
+   "fieldname": "skip_item_price",
+   "fieldtype": "Check",
+   "label": "Skip Item Price",
+   "default": "0"
+  },
+  {
+   "fieldname": "log_section",
+   "fieldtype": "Section Break",
+   "label": "Import Log"
+  },
+  {
+   "fieldname": "import_log",
+   "fieldtype": "Long Text",
+   "label": "Import Log",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-02-20 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Modern Ui",
+ "name": "Bulk Item Import",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Stock Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
