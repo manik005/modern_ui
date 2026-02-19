@@ -68,7 +68,7 @@ body {
     height: var(--navbar-height);
 }
 .navbar-home img{
-	max-height: 50px;
+	max-height: 55px;
 	padding:2px;
 }
 
@@ -208,11 +208,6 @@ body {
     box-shadow: var(--bs-box-shadow);
 }
 
-.widget.shortcut-widget-box, .widget.spacer{
-	border-radius: none;
-	box-shadow: none;
-}
-
 /* =========================================================
    GOLD ACCENT LEFT BORDER (Optional Premium Look)
 ========================================================= */
@@ -230,28 +225,6 @@ body {
 	color: var(--white-color) !important;
 }
 
-
-
-[aria-label="Help Dropdown"], [aria-label="Toggle Section: Public"]{
-	display: none !important;
- }
-
-
- .standard-sidebar .standard-sidebar-item.selected > a .icon, .desk-sidebar .standard-sidebar-item.selected > a .icon, .search-dialog .search-results .search-sidebar .standard-sidebar-item.selected > a .icon, .standard-sidebar .standard-sidebar-item.selected .es-icon, .desk-sidebar .standard-sidebar-item.selected .es-icon, .search-dialog .search-results .search-sidebar .standard-sidebar-item.selected .es-icon {
-    stroke: var(--white-color);
-    filter: brightness(10) saturate(100%);
-}
-
-
-.standard-sidebar .standard-sidebar-item > a, .desk-sidebar .standard-sidebar-item > a, .search-dialog .search-results .search-sidebar .standard-sidebar-item > a {
-    padding: 10px !important;
-}
-
-.dropdown-notifications button.notifications-icon .es-icon{
-	stroke: var(--white-color) !important;
-
-}
-
-.pos-footer-component .footer-content{
-	display: none !important;
+.desk-sidebar .standard-sidebar-item.selected svg{
+	fill: var(--white-color) !important;
 }
