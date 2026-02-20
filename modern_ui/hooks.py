@@ -25,7 +25,7 @@ app_license = "mit"
 # ------------------
 
 # include js, css files in header of desk.html
-app_include_css = "/assets/modern_ui/css/theme.css"
+app_include_css = ["/assets/modern_ui/css/theme.css"]
 #app_include_js = "/assets/modern_ui/js/modern_ui.js"
 #app_include_js = ["/assets/modern_ui/js/modern_ui.bundle.js"]
 app_include_js = "/assets/modern_ui/js/modern_ui.bundle.js"
@@ -195,6 +195,10 @@ web_include_css = "/assets/modern_ui/css/website.css"
 # -----------------------------------------------------------
 
 # ignore_links_on_delete = ["Communication", "ToDo"]
+
+# Sidebar/Menu
+# ----------------
+# sidebar_config = "modern_ui.config.sidebar.get_config"
 
 # Request Events
 # ----------------

@@ -15,6 +15,7 @@
   "default_warehouse",
   "default_price_list",
   "default_currency",
+  "difference_account",
   "options_section",
   "skip_stock_reconciliation",
   "skip_item_price",
@@ -74,14 +75,21 @@
   {
    "fieldname": "default_price_list",
    "fieldtype": "Link",
-   "label": "Default Price List",
+   "label": "Default Price List t",
    "options": "Price List"
   },
   {
    "fieldname": "default_currency",
    "fieldtype": "Link",
-   "label": "Default Currency",
+   "label": "Default Currency y",
    "options": "Currency"
+  },
+  {
+   "fieldname": "difference_account",
+   "fieldtype": "Link",
+   "label": "Difference Account (Opening Stock)",
+   "options": "Account",
+   "description": "Account for Stock Reconciliation difference (must be Asset/Liability type)"
   },
   {
    "fieldname": "options_section",
@@ -116,7 +124,7 @@
  "links": [],
  "modified": "2026-02-20 09:00:00.000000",
  "modified_by": "Administrator",
- "module": "Modern Ui",
+ "module": "modern_ui",
  "name": "Bulk Item Import",
  "owner": "Administrator",
  "permissions": [

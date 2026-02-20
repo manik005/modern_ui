@@ -8,6 +8,27 @@ from frappe.utils import cint, flt, nowdate, nowtime
 
 
 class BulkItemImport(Document):
+    def before_insert(self):
+        """Pre-populate column mapping from CSV if available"""
+        pass
+
+    @frappe.whitelist()
+    def detect_columns(self):
+        """Detect CSV columns for user mapping"""
+        if not self.csv_file:
+            frappe.throw("Please attach a CSV file first.")
+
+        file_doc = frappe.get_doc("File", {"file_url": self.csv_file})
+        file_path = file_doc.get_full_path()
+
+        try:
+            with open(file_path, "r", encoding="utf-8-sig") as f:
+                reader = csv.reader(f)
+                headers = next(reader)
+                return {"columns": headers}
+        except Exception as e:
+            frappe.throw(f"Error reading CSV: {str(e)}")
+
     @frappe.whitelist()
     def import_csv(self):
         self.check_permission("write")
@@ -42,6 +63,44 @@ class BulkItemImport(Document):
         default_currency = self.default_currency or frappe.db.get_single_value(
             "Global Defaults", "default_currency"
         )
+        difference_account = self.difference_account
+        account_details = None
+
+        if not difference_account and not self.skip_stock_reconciliation:
+            frappe.throw(
+                "Difference Account is required for Stock Reconciliation. "
+                "Please set a valid Asset/Liability account."
+            )
+
+        # Validate difference account type
+        if difference_account:
+            account_details = frappe.db.get_value(
+                "Account",
+                difference_account,
+                ["account_type", "root_type", "is_group", "company"],
+                as_dict=True,
+            )
+            if not account_details:
+                frappe.throw(f"Account {difference_account} does not exist.")
+
+            if not default_company:
+                default_company = account_details.company
+
+            if account_details.is_group:
+                frappe.throw(
+                    f"Account '{difference_account}' is a Group account. "
+                    "Please select a Ledger account (not a group)."
+                )
+            if account_details.root_type not in ["Asset", "Liability"]:
+                frappe.throw(
+                    f"Account '{difference_account}' is of type '{account_details.root_type}'. "
+                    "Please select an Asset or Liability account."
+                )
+            if default_company and account_details.company != default_company:
+                frappe.throw(
+                    f"Account '{difference_account}' belongs to company '{account_details.company}'. "
+                    f"Please select an account from company '{default_company}'."
+                )
 
         for row_idx, row in enumerate(reader, start=2):
             normalized = {_normalize_header(k): (v or "").strip() for k, v in row.items()}
@@ -148,6 +207,8 @@ class BulkItemImport(Document):
                 stock_reco.company = default_company
                 stock_reco.posting_date = nowdate()
                 stock_reco.posting_time = nowtime()
+                if difference_account:
+                    stock_reco.difference_account = difference_account
 
                 for item_code, payload in items.items():
                     stock_reco.append(
@@ -160,9 +221,20 @@ class BulkItemImport(Document):
                         },
                     )
 
-                stock_reco.insert(ignore_permissions=True)
-                stock_reco.submit()
-                stock_recos += 1
+                try:
+                    stock_reco.insert(ignore_permissions=True)
+                    stock_reco.submit()
+                    stock_recos += 1
+                except frappe.ValidationError as e:
+                    error_msg = str(e)
+                    if "Difference Account" in error_msg or "Asset" in error_msg:
+                        frappe.throw(
+                            f"Invalid Difference Account: {difference_account}. "
+                            f"It must be an Asset or Liability type account. "
+                            f"Error: {error_msg}"
+                        )
+                    else:
+                        raise
 
         self._write_log(
             errors,
@@ -237,9 +309,15 @@ def _apply_item_fields(item, normalized, item_name, item_group, stock_uom):
         ),
     }
 
+    item_tax = _get_value(normalized, "item_tax", "item_tax_template")
+
     for field, value in field_map.items():
         if value not in (None, ""):
             item.set(field, value)
+
+    if item_tax:
+        item.set("taxes", [])
+        item.append("taxes", {"item_tax_template": item_tax})
 
 
 def _parse_bool(value):
